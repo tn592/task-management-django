@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+	{% comment %}
+	<p class="red-bg">This is a test page</p>
+		<img src="{% static 'images/image.jpg' %}" alt="">
+	{% endcomment %}
+	{% comment %}
+	{{ name }}
+		<p class="red-bg">{{ age }}</p>
+	{% endcomment %}
+	
+	    {% for n in name %}
+			{% if not n == 'Kyo' %}
+				<p> {{ n }} </p>
+			{% endif %}
+		{% comment %}
+		<p>{{ n }}</p>
+		{% endcomment %}
+		{% endfor %}
+		{% with a=10 %}
+			<div> Value of a: {{ a }} </div>
+		{% endwith %}
+		{{ count }}
+</body>
+</html>

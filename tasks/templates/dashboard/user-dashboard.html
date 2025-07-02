@@ -1,0 +1,179 @@
+{% extends "dashboard/dashboard.html" %} {% block title %} User Dashboard {% endblock title %} 
+{% block tasks %} 
+{% comment %} Task Item {% endcomment %}
+<div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-7">
+	{% comment %} Today's Tasks {% endcomment %}
+	<div class="bg-white pt-4 pb-12 px-4 rounded-md shadow-sm">
+		<h3 class="text-xl font-bold mb-3">Today's Tasks</h3>
+		{% comment %} Task List Item-1 {% endcomment %}
+		<div class="flex justify-between mb-3">
+			<div class="flex items-center gap-2">
+				<div class="w-2 h-2 bg-green-500 rounded-full"></div>
+				<div>
+					<span>Complete project proposal</span>
+				</div>
+			</div>
+			<div>
+				<span class="text-gray-500 text-sm">High</span>
+			</div>
+		</div>
+		{% comment %} Task List Item-2 {% endcomment %}
+		<div class="flex justify-between mb-3">
+			<div class="flex items-center gap-2">
+				<div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
+				<div>
+					<span>Review team updates</span>
+				</div>
+			</div>
+			<div>
+				<span class="text-gray-500 text-sm">Normal</span>
+			</div>
+		</div>
+		{% comment %} Task List Item-3 {% endcomment %}
+		<div class="flex justify-between mb-3">
+			<div class="flex items-center gap-2">
+				<div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+				<div>
+					<span>Prepare for client meeting</span>
+				</div>
+			</div>
+			<div>
+				<span class="text-gray-500 text-sm">Low</span>
+			</div>
+		</div>
+	</div>
+	{% comment %} All Tasks {% endcomment %}
+	<div class="px-4 bg-white pt-4 pb-12 rounded-md shadow-sm">
+		<h3 class="text-xl font-bold mb-3">All Tasks</h3>
+		{% comment %} Task Table {% endcomment %}
+		<div class="w-5/6">
+			<div
+				class="grid grid-cols-4 gap-2 text-sm font-semibold text-gray-600 mb-3"
+			>
+				<div>TASK TITLE</div>
+				<div>PRIORITY</div>
+				<div>TEAM</div>
+				<div>CREATED AT</div>
+			</div>
+			<div>
+				{% comment %} Task Items 1st row {% endcomment %}
+				<div class="grid grid-cols-4 gap-2 text-sm mb-3">
+					<div class="flex items-center gap-2">
+						<div class="w-2 h-2 bg-green-500 rounded-full"></div>
+						<div>
+							<span>Test Low Task</span>
+						</div>
+					</div>
+					<div>
+						<span
+							class="px-3 py-1 rounded-md bg-blue-100 text-blue-700 text-sm"
+							>Low</span
+						>
+					</div>
+					<div>
+						<div class="flex -space-x-2">
+							<div
+								class="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white text-[12px] border-white"
+							>
+								CA
+							</div>
+							<div
+								class="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white text-[12px] border-white"
+							>
+								JS
+							</div>
+							<div
+								class="w-6 h-6 rounded-full bg-yellow-500 flex items-center justify-center text-white text-[12px] border-white"
+							>
+								B
+							</div>
+						</div>
+					</div>
+					<div>
+						<span class="text-gray-500">9 months ago</span>
+					</div>
+				</div>
+				{% comment %} Task Items 2nd row {% endcomment %}
+				<div class="grid grid-cols-4 gap-2 text-sm mb-3">
+					<div class="flex items-center gap-2">
+						<div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
+						<div>
+							<span>Test task</span>
+						</div>
+					</div>
+					<div>
+						<span
+							class="px-3 py-1 rounded-md bg-gray-100 text-gray-600 text-sm"
+							>Normal</span
+						>
+					</div>
+					<div>
+						<div class="flex -space-x-2">
+							<div
+								class="w-6 h-6 rounded-full bg-red-500 flex items-center justify-center text-white text-[12px] border-white"
+							>
+								AJ
+							</div>
+							<div
+								class="w-6 h-6 rounded-full bg-purple-500 flex items-center justify-center text-white text-[12px] border-white"
+							>
+								EV
+							</div>
+							<div
+								class="w-6 h-6 rounded-full bg-yellow-500 flex items-center justify-center text-white text-[12px] border-white"
+							>
+								B
+							</div>
+						</div>
+					</div>
+					<div>
+						<span class="text-gray-500">9 months ago</span>
+					</div>
+				</div>
+				{% comment %} Task Items 3rd row {% endcomment %}
+				<div class="grid grid-cols-4 gap-2 text-sm mb-3">
+					<div class="flex items-center gap-2">
+						<div class="w-2 h-2 bg-red-500 rounded-full"></div>
+						<div>
+							<span>Test task</span>
+						</div>
+					</div>
+					<div>
+						<span
+							class="px-3 py-1 rounded-md bg-red-50 text-red-600 text-sm"
+							>High</span
+						>
+					</div>
+					<div>
+						<div class="flex -space-x-2">
+							<div
+								class="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white text-[12px] border-white"
+							>
+								CA
+							</div>
+							<div
+								class="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white text-[12px] border-white"
+							>
+								JS
+							</div>
+							<div
+								class="w-6 h-6 rounded-full bg-red-500 flex items-center justify-center text-white text-[12px] border-white"
+							>
+								AJ
+							</div>
+							<div
+								class="w-6 h-6 rounded-full bg-yellow-500 flex items-center justify-center text-white text-[12px] border-white"
+							>
+								B
+							</div>
+						</div>
+					</div>
+					<div>
+						<span class="text-gray-500">10 months ago</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock tasks %}
