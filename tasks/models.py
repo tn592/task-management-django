@@ -17,8 +17,11 @@ class Task(models.Model):
         ("IN_PROGRESS", "In Progress"),
         ("COMPLETED", "Completed"),
     ]
+    # project = models.ForeignKey(
+    #     "Project", on_delete=models.CASCADE, default=1, related_name="projects"
+    # )
     project = models.ForeignKey(
-        "Project", on_delete=models.CASCADE, default=1, related_name="projects"
+        "Project", on_delete=models.CASCADE, default=1
     )
     assigned_to = models.ManyToManyField(Employee, related_name="tasks")
     title = models.CharField(max_length=250)

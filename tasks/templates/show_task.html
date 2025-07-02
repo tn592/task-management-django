@@ -8,18 +8,70 @@
 	<link rel="stylesheet" href="">
 </head>
 <body>
-	<div>
-		<ul>
-			{% for task in tasks %}
-				<li>{{ task.status }}</li>
+		{% comment %}
+		<div>
+					{{ tasks }}
+				</div>
+		{% endcomment %}
+		{% comment %}
+		<div>
+					<ol>
+						{% for task in tasks %}
+							<li>
+								<p> {{task.task.title}} </p>
+								<span>{{ task.priority }}</span>	
+								<p> {{ task.name }} </p>
+								{% for task in task.projects.all %}							
+									<p> {{ task.title }} </p>							
+								{% endfor %}
+							</li>
+							<p> {{task.title}} </p>
+							{% for emp in task.assigned_to.all %}
+								<p> {{emp.name}} </p>
+							{% endfor %}
+						{% endfor %}
+					</ol>
+				</div>	
+		{% endcomment %}
+		{% comment %}
+		<div>
+			{{task_3}}
+		</div>
+		<div>
+			<ul>
+			{% for pt in pending_task %}
+				<li>
+					<p>{{ pt.title }}</p>
+					<span> {{pt.status}} </span>
+				</li>	
 			{% endfor %}
-		</ul>
-	</div>	
+			</ul>
+		</div>
+		<div>
+			<ul>
+			{% for t in tp %}
+				<li>
+					<p>{{ t.task }}</p>
+					<span> {{t.priority}} </span>
+				</li>	
+			{% endfor %}
+			</ul>
+		</div>
+	{% endcomment %}
+{% comment %}
 	<div>
-		{{task_3}}
+		<p> {{task_count}} </p>
 	</div>
+{% endcomment %}
 	<div>
-		{{first_task}}
+		<ol>
+			{% for project in projects %}
+				<li>
+					<p> {{project.name}} </p>
+					<p> {{project.num_task}} </p>
+				</li>
+			{% endfor %}
+		</ol>
 	</div>
 </body>
 </html>
