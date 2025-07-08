@@ -4,10 +4,12 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import fields, widgets
 from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from tasks.forms import StyledFormMixin
 
 class RegisterForm(UserCreationForm):
-	class Meta:
+
+	class Meta:		
 		model = User
 		fields = ['username', 'first_name', 'last_name', 'password1', 'password2', 'email']
 
@@ -22,7 +24,7 @@ class CustomRegistrationForm(StyledFormMixin, forms.ModelForm):
 
 	class Meta:
 		model = User
-		fields = ['username', 'first_name', 'last_name', 'email']
+		fields = ['username', 'first_name', 'last_name', 'password1', 'confirm_password', 'email']
 
 # re.fullmatch(r'[A-Za-z0-9@#$%^&+=]', password1)
 # raise forms.ValidationError('Password must be at least 8 character long')
@@ -38,6 +40,9 @@ class CustomRegistrationForm(StyledFormMixin, forms.ModelForm):
 	def clean_password1(self):
 		password1 = self.cleaned_data.get('password1')
 		errors = []
+
+		if not password1:
+			raise forms.ValidationError("Password field cannot be empty")
 
 		if len(password1) < 8:
 			errors.append("Password must be at least 8 character long")
