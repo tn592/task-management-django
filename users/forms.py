@@ -6,6 +6,7 @@ from django.forms import fields, widgets
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from tasks.forms import StyledFormMixin
+from django.contrib.auth.forms import AuthenticationForm
 
 class RegisterForm(UserCreationForm):
 
@@ -68,3 +69,7 @@ class CustomRegistrationForm(StyledFormMixin, forms.ModelForm):
 			raise forms.ValidationError("Password do not match")
 
 		return cleaned_data
+
+class LoginForm(StyledFormMixin, AuthenticationForm):
+	def __init__(self, *args, **kwargs):
+	    super().__init__(*args, **kwargs)
