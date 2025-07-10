@@ -1,10 +1,11 @@
 from django import forms
 import re
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Group, Permission, User
 from django.forms import fields, widgets
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
+from django.forms.models import Field
 from tasks.forms import StyledFormMixin
 from django.contrib.auth.forms import AuthenticationForm
 
@@ -73,3 +74,23 @@ class CustomRegistrationForm(StyledFormMixin, forms.ModelForm):
 class LoginForm(StyledFormMixin, AuthenticationForm):
 	def __init__(self, *args, **kwargs):
 	    super().__init__(*args, **kwargs)
+
+
+class AssignRoleForm(StyledFormMixin, forms.Form):
+	role = forms.ModelChoiceField(
+		queryset=Group.objects.all(), 
+		empty_label="Select a Role"
+	)
+
+
+class CreateGroupForm(StyledFormMixin, forms.ModelForm):
+	permissions = forms.ModelMultipleChoiceField(
+			queryset=Permission.objects.all(),
+			widget=forms.CheckboxSelectMultiple,
+			required=False,
+			label='Assign Permission'
+		)
+
+	class Meta:
+		model = Group
+		fields = ['name', 'permissions']
