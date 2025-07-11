@@ -4,9 +4,11 @@ from django.db.models.aggregates import Count
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from tasks.forms import TaskDetailModelForm, TaskForm, TaskModelForm
-from tasks.models import Project, Task, Employee, TaskDetail
+from tasks.models import Project, Task, TaskDetail
 from datetime import date
 from django.db.models import Q
+from users.views import is_admin
+
 
 def is_manager(user):
     return user.groups.filter(name='Manager').exists()
@@ -14,16 +16,11 @@ def is_manager(user):
 def is_employee(user):
     return user.groups.filter(name='Manager').exists()
 
+# @user_passes_test(is_admin_or_manager, login_url='no_permission')
 @user_passes_test(is_manager, login_url='no_permission')
 def manager_dashboard(request):
     type= request.GET.get('type', 'all')
-    # print(request.GET)
-    # tasks = Task.objects.select_related('details').prefetch_related('assigned_to').all()
     base_query = Task.objects.select_related('details').prefetch_related('assigned_to')
-    # total_tasks = tasks.count()
-    # completed_tasks = Task.objects.filter(status='COMPLETED').count()
-    # task_in_progress = Task.objects.filter(status='IN_PROGRESS').count()
-    # pending_tasks = Task.objects.filter(status='PENDING').count()
     counts = Task.objects.aggregate(
         total=Count('id'),
         completed=Count('id',filter=Q(status='COMPLETED')),
@@ -54,12 +51,11 @@ def employee_dashboard(request):
 @login_required 
 @permission_required('tasks.add_task', login_url='no_permission')
 def create_task(request):
-    employees = Employee.objects.all()
     task_form = TaskModelForm() 
     task_detail_form = TaskDetailModelForm()
     if request.method == "POST":
         task_form = TaskModelForm(request.POST)
-        task_detail_form = TaskDetailModelForm(request.POST)
+        task_detail_form = TaskDetailModelForm(request.POST, request.FILES)
         if task_form.is_valid() and task_detail_form.is_valid():
             task = task_form.save()
             task_detail = task_detail_form.save(commit=False)
@@ -83,7 +79,7 @@ def update_task(request, id):
     
     if request.method == "POST":
         task_form = TaskModelForm(request.POST, instance=task)
-        task_detail_form = TaskDetailModelForm(request.POST, instance=task.details)
+        task_detail_form = TaskDetailModelForm(request.POST, request.FILES, instance=task.details,)
         if task_form.is_valid() and task_detail_form.is_valid():
             task = task_form.save()
             task_detail = task_detail_form.save(commit=False)
@@ -118,4 +114,31 @@ def view_task(request):
         "show_task.html",
         {"projects": projects}
     )
+
+@login_required 
+@permission_required('tasks.view_task', login_url='no_permission')
+def task_details(request, task_id):
+    task = Task.objects.get(id=task_id)
+    status_choices = Task.STATUS_CHOICES
+
+    if request.method == "POST":
+        selected_status = request.POST.get('task_status')
+        print(selected_status)
+        task.status = selected_status
+        task.save()
+        return redirect('task_details', task.id)
+    return render(request, 'task_details.html', {'task':task, 'status_choices': status_choices})
+
+
+@login_required 
+def dashboard(request):
+    if is_manager(request.user):
+        return redirect('manager_dashboard')
+    elif is_employee(request.user):
+        return redirect('user_dashboard')
+    elif is_admin(request.user):
+        return redirect('admin_dashboard')
+
+    return redirect('no_permission')
+
 

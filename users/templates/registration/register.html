@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title></title>
-	<link rel="stylesheet" href="">
-	<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> 
-</head>
-<body>
-	<h1>Welcome to Authentication System</h1>
+{% extends "base.html" %}
+{% block content %}
+<div class="mx-auto w-1/2 my-9">
 	<div>
 			{% if messages %}
 				{% for message in messages %}
@@ -40,8 +31,8 @@
 				</p>
 			{% endfor %}	
 			
-			<button type="submit">Sign Up</button>
+			<button class="bg-blue-500 px-2 py-1 rounded mt-3 text-white" type="submit">Sign Up</button>
 		</form>
 	</div>	
-</body>
-</html>
+</div>
+{% endblock content %}
