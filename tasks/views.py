@@ -8,7 +8,28 @@ from tasks.models import Project, Task, TaskDetail
 from datetime import date
 from django.db.models import Q
 from users.views import is_admin
+from django.http import HttpResponse
+from django.views import View
 
+
+# Class-based re-use example
+class Greetings(View):
+    greetings = 'Hi Everyone'
+
+    def get(self, request):
+        return HttpResponse(self.greetings)
+
+class NewGreetings(Greetings):
+    greetings = 'Good Morning!'
+
+    def get(self, request):
+        return HttpResponse(self.greetings)
+
+class Pr(View):
+    r = 'Example Words'
+
+    def get(self, request):
+        return HttpResponse(self.r)
 
 def is_manager(user):
     return user.groups.filter(name='Manager').exists()
